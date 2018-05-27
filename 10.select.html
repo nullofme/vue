@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<select name="1" id="select" >
+    <!--默认显示selected，禁用的disabled-->
+    <option value="" selected disabled>请选择</option>
+    <option value="1">你好</option>
+    <option value="2">我好</option>
+    <option value="3">大家好</option>
+</select>
+<script>
+    let oSelect=document.getElementById('select');
+    oSelect.onchange=function () {//select不能使用onclick事件
+        alert(this.value)
+    };
+</script>
+
+<div id="app">
+    <select v-model="a" multiple><!--multiple多选-->
+        <option value="" disabled>请选择</option>
+        <option value="1">你好</option>
+        <option value="2">我好</option>
+        <option value="3">大家好</option>
+    </select>
+    {{a}}
+    <!--如果value属性不写，默认取得是option中的值-->
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm=new Vue({
+        el:'#app',
+        data:{
+           // a:'',
+            a:[]//如果select是多选框，数据类型是数组
+        }
+    });
+</script>
+</body>
+</html>

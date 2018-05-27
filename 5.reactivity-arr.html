@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    {{arr}}
+    {{arr[1]}}
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm=new Vue({
+        el:'#app',
+        data:{
+            arr:[1,2,3]
+        }
+    });
+    /*去改变数组中的某一项是监控不到的
+    vm.arr[0]=100 X
+    vm.arr.length-=2 X 不能改变数组的长度
+
+    变异方法(改变原数组)：pop push shift  unshift reverse splice
+    */
+    vm.arr=vm.arr.map(item=>item*=3);
+</script>
+</body>
+</html>
+</body>
+</html>
