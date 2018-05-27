@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="input">
+<script>
+  let obj={};
+  var temp={};
+  Object.defineProperty(obj,'name',{
+      value:1,
+      configurable:false,//是否可删除
+      writable:false,//是否可编辑
+      enumerable:false,//是否可枚举
+      get(){//取值时会调用
+          /*return 1;*/
+          return  temp['name']
+      },
+      set(val){//赋值时触发
+          console.log(val);
+          /*obj.name=val;//死循环*/
+          temp['name']=val;//改变temp结果
+          input.value=val;//将值赋予输入框
+      }
+  })
+    input.value=obj.name;//页面加载时，会调用get方法，等待输入框的变化
+    input.addEventListener('input',function () {
+        obj.name=this.value;//当值变化调用set
+    })
+</script>
+</body>
+</html>
