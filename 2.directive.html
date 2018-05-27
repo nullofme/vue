@@ -11,10 +11,19 @@
     <!--vue的指令-directive 只是dom上的行间属性，vue给这类属性赋予一定的意义，来实现特殊的功能 所有的指令都以v-开头
      value属性默认情况下会被vue忽略掉
      selected、checked都没有意义-->
-    <input type="text" v-model="msg">
-    <!--v-model会将msg的值赋予输入框，输入框的值改变了会影响数据-msg-->
 
+    <!--v-model会将msg的值赋予输入框，输入框的值改变了会影响数据-msg-->
+    <input type="text" v-model="msg">
     <!--Object.defineProperty ES5-->
+
+    <!--v-text==={{}}，防止{{}}出现在页面中-->
+    <div v-text="msg"></div><!--标签内不能写东西，会闪动覆盖-->
+
+    <!--v-once只绑定一次，当数据再次发生变化，也不会导致页面刷新-->
+    <div v-once>{{msg}}</div>
+
+    <!--v-html 把html字符当作html渲染,一定是可以信任的html-->
+    <div v-html="p"></div>
 </div>
 <script src="../node_modules/vue/dist/vue.js"></script>
 <script>
@@ -22,6 +31,7 @@
         el:'#app',
         data:{
             msg:'abc',
+            p:'<h2>hello</h2>'
         }
     });
 </script>
