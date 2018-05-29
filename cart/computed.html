@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <table class="table table-hover table-bordered">
+                <caption class="h2 text-primary text-center">购物车</caption>
+                <tr>
+                    <th>全选<input type="checkbox"
+                                 v-model="checkAll"
+                                 ></th><!--computed不需要 @change="change"-->
+                    <td>商品</td>
+                    <td>单价</td>
+                    <td>数量</td>
+                    <td>小计</td>
+                    <td>操作</td>
+                </tr>
+                <tr v-for="(product,index) in products">
+                    <th>
+                        <input type="checkbox"
+                               v-model="product.selected"
+                              ></th><!--computed不需要 @change="checkOne"-->
+                    <td>
+                        <img style="width: 100px" v-bind:src="product.img">
+                        <span>{{product.title}}</span>
+                    </td>
+                    <td>{{product.price}}</td>
+                    <td>
+                        <input type="number" v-model.number="product.count" min="1">
+                    </td>
+                    <td>{{product.price*product.count | toFixed(2)}} </td>
+                    <td><button class="btn btn-danger" @click="remove(product)">X</button></td>
+                </tr>
+                <td colspan="6">总价格：{{sum | toFixed(2)}}</td>
+                <!--sum计算属性，不是方法-->
+            </table>
+        </div>
+    </div>
+
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script src="../../node_modules/axios/dist/axios.js"></script>
+<script>
+    let vm=new Vue({
+        el: '#app',
+        //当给全选赋值时，要影响其他的变化，当页面刷新时，获取全选值，是根据下面的checkb计算出来的结果给全选赋值
+        computed:{
+            //放在computed中最后也会放在vm上，不能重名————计算属性
+           checkAll:{//当product的selected的变化时，会重新计算,不需要change和checkone方法
+                get(){//get和set this指向实例,默认v-model会获取checkAll的值，所以会调用get方法
+                    return this.products.every(item=>item.selected)
+                },
+                set(val){//当给checkbox赋值时,val的结果当前操作的结果true、false
+                    console.log(val);
+                    this.products.forEach(item=>item.selected=val)
+                }
+           },
+            sum(){//如果计算属性写成函数，默认调用就是get方法
+                return this.products.reduce((prev,next)=>{
+                    if(!next.selected){
+                        return prev;
+                    }
+                    return   prev+next.price*next.count
+                },0)
+            }
+/*            sum:{//sum的结果会被缓存，如果依赖的数据没有变化，就不会重新执行
+               get(){
+                       return this.products.reduce((prev,next)=>{
+                           if(!next.selected){
+                               return prev;
+                           }
+                           return   prev+next.price*next.count
+                       },0)
+               }
+            }*/
+        },
+        created() {
+            this.getData();
+        },
+        filters:{
+            toFixed(input,n){
+                return '￥'+input.toFixed(n)
+            }
+        },
+        methods: {
+            getData() {
+                axios.get('cart.json').then(res => {
+                    this.products = res.data;
+                }, err => {
+                    console.log(err);
+                })
+            },
+            remove(obj){
+                this.products=this.products.filter(item=>item!==obj);
+            }
+        },
+        data: {
+            products: [],
+           // checkAll:false,是算出来的，定义在computed中
+        }
+    })
+</script>
+</body>
+</html>

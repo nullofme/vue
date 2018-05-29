@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div>div{
+            width: 200px;
+            height: 200px;
+            background: pink;
+        }
+    </style>
+    <link rel="stylesheet" href="../../node_modules/animate.css/animate.min.css">
+</head>
+<body>
+<div id="app">
+    <button @click="flag=!flag"> 切换</button>
+    <input type="text" v-model="query">
+    <transition-group enter-active-class="animated fadeInRight" leave-active-class="animated fadeInLeft">
+        <div v-for="(item,index) in newArr" :key="Math.random()">{{item}}</div>
+        <!--输入筛选出的数组只有一项，key是index时索引都是0，不会有动画-->
+    </transition-group>
+
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm=new Vue({
+        el:'#app',
+        computed:{
+            newArr(){
+                return this.arr.filter(item=>item==this.query)
+            }
+        },
+        data:{
+            query:'',
+            flag:true,
+            arr:[1,2,3,4,5]
+        }
+    });
+</script>
+</body>
+</html>
