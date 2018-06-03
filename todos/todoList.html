@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+        .del{
+            text-decoration: line-through;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--导航-->
+    <div class="navbar navbar-inverse"><!--生成导航栏，背景为黑色-->
+        <div class="container-fluid"><!--流动布局-->
+            <div class="navbar-header"><!--导航中的头部-->
+                <a class="navbar-brand">TodoList</a><!--头部中的商标-->
+            </div>
+        </div><!--流式布局，宽度100%-->
+    </div>
+    <!--主体-->
+    <div class="container"><!--实现居中-->
+        <div class="row"><!--变为行布局-->
+            <div class="col-md-12">
+                <div class="col-md-offset-3 col-md-6"><!--偏移3列，自己占六列-->
+                    <div class="panel panel-warning"><!--面板  面板的颜色-->
+                        <div class="panel-heading"><!--面板的头部-->
+                            <h4 class="text-danger">亲，你还有 {{count}} 件事要办理</h4>
+                            <input type="text" class="form-control" placeholder="请输入要办理的事情" v-model="todo.title" @keyup.enter="addOne">
+                        </div>
+                        <div class="panel-body"><!--面板主体-->
+                            <ul class="list-group"><!--表单组-->
+                                <li class="list-group-item" v-for="item
+in newTodos" @dblclick="change(item)"><!--列表组中的每一个-->
+                                    <div v-show="item!=cur">
+                                        <span :class="{del:item.isSelected}">
+                                            <input type="checkbox" v-model="item.isSelected">
+                                            <span>{{item.title}}</span>
+                                        </span>
+                                        <button class="btn btn-danger btn-xs pull-right" @click="remove(item)">&times;</button><!--pull-right放到右面-->
+                                    </div>
+                                    <div v-show="item==cur"><!--当前点的和得到的是同一个-->
+                                        <!--那个输入框需要获取焦点，那个输入框加获取焦点-->
+                                        <!--自定义指令，如果当前指令的值是ture，输入框获取焦点-->
+                                        <input type="text" v-model="item.title" v-auto-focus="item==cur" @blur="cancel" @keyup.enter="cancel">
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-footer"><!--面板尾部-->
+                            <ul class="nav nav-pills"><!--nav-pills胶囊式导航-->
+                                <li :class="{active:hash=='all'}"><a href="#/all">全部</a></li><!--active激活状态-->
+                                <li :class="{active:hash=='finish'}"><a href="#/finish">已完成</a></li>
+                                <li :class="{active:hash=='unfinish'}"><a href="#/unfinish">未完成</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script src="todo.js"></script>
+<!--1.渲染数据列表，根据定义的数据渲染  √-->
+<!--2.删除列表中某一项 √-->
+<!--3.实现添加功能，获取未选中的个数 √-->
+<!--4.通过动态样式 添加删除效果-->
+<!--5.实现导航切换效果 √-->
+<!--6.实现双击输入框 获取焦点 可以更改内容 -->
+<!--7.通过 localStorage存储到本地 实现本地存储-->
+</body>
+</html>

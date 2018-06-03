@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--@click.capture先捕获，再冒泡-->
+    <!--@click.once只绑定一次 on('click') off('click')-->
+    <div @click="parent">parent
+        <div @click.self="child">child
+            <div @click="grandson">grandson</div>
+        </div>
+    </div>
+    <a href="https://www.baidu.com"  @click.prevent="grandson">百度</a>
+    <!--@click.prevent阻止默认跳转行为-->
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm=new Vue({
+        el:'#app',
+        methods:{
+            parent(){alert('parent')},
+            child(){alert('child')},
+            grandson(){alert('grandson')}//@click.stop阻止事件传播
+            //grandson(e){alert('grandson');e.stopPropagation()}
+            //grandson(e){alert('grandson');e.cancelBubble=true}
+        },
+        data:{
+        }
+    });
+</script>
+</body>
+</html>

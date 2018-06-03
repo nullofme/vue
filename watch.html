@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="a">
+    {{msg}}
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm=new Vue({
+        el:'#app',
+        data:{a:'',msg:''},
+        watch:{//只有值变化的时候才会触发，支持异步
+            //watch的属性名和要观察的名字一样
+            a(newVal,oldVal){
+              // setTimeout(()=>{
+                   if(newVal.length<3){
+                       return this.msg='太少'
+                   }
+                   if(newVal.length>6){
+                       return this.msg='太多'
+                   }
+                   this.msg='ok'
+              // },1000)
+            }
+        }
+    });
+</script>
+</body>
+</html>

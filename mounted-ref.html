@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+   <p ref="abc">{{msg}}</p>
+    <div ref="arr">
+        <div v-for="item in arr">{{item}}</div>
+    </div>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    /*
+    * this.$data vm上的数据
+    * this.$watch 监控
+    * this.$el 当前元素
+    * this.$set 后面的属性实现响应变化
+    * this.$options vm上所有的属性
+    * */
+    let vm=new Vue({
+        el:'#app',
+        data:{
+            msg:'123',
+            arr:[1,2,3]
+        },
+        mounted(){
+            this.$nextTick(()=>{//异步方法，等待渲染dom（dom渲染是异步的）完成后获取vm
+                console.log(vm)
+            });
+            console.log(this.$refs.abc)//如果dom元素不是通过v-for循环出来的只能获取一个
+            this.arr=[1,2,3,4];
+            console.log(this.$refs.arr.children.length );//3
+            this.$nextTick(()=>{
+                console.log(this.$refs.arr.children.length );//4
+            })
+        }
+    });
+</script>
+</body>
+</html>

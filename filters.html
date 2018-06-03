@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app1">{{'ab' | add(123)}}</div>
+<div id="app2">{{'abc' | add(0)}}</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    Vue.filter('add',(data,n)=>data+n);//全局过滤器，要放在页面的顶部
+    new Vue({
+        el:'#app1',
+/*        filters:{//单个实例上的
+            add(data,pram){
+                return data+pram
+            }
+        }*/
+    });
+   new Vue({
+        el:'#app2',
+    });
+</script>
+</body>
+</html>

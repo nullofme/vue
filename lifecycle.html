@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    /*声明周期
+    * beforeCreate   created
+    * beforeMount    mounted
+    * beforeUpdate   updated
+    * beforeDestroy  destroyed
+    * */
+
+    let vm=new Vue({//根实例，初始化会调用很多方法(钩子函数)
+        el:'#app',
+        data:{a:""},
+        beforeCreate(){},//此方法用不到
+        created(){},//获取ajax，页面初始化操作
+        template:'<div>{{a}}</div>',//如果有template属性会用模板替换掉html
+        beforeMount(){},//挂载前，要保证有编译的元素el
+        mounted(){},//真实dom渲染完了，操作dom
+        beforeUpdate(){},//页面依赖的数据，更新之前，一般用watch替换掉
+        updated(){},//页面依赖的数据，更新后
+        beforeDestroy(){},//销毁前，可以清除定时器或者解绑事件
+        destroyed(){}//销毁后，移除所有的监听，数据不会被清掉
+    });
+</script>
+</body>
+</html>
