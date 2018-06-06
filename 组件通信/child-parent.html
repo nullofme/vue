@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--父亲绑定好一些事件，将参数传递过去，
+单向数据流
+父亲数据刷新，儿子数据变化-->
+<div id="app">
+    父亲:{{money}}
+    <child :m="money" @child-msg="things"></child>
+    <!--child.on('child-msg',things)-->
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm=new Vue({
+        el:'#app',
+        data:{money:400},
+        methods:{
+            things(val){//on('xxx',things)
+this.money=val
+            }
+        },
+        components:{
+            child:{
+                props:['m'],
+                template:`<div>儿子{{m}}
+                <button @click="getMoney()">多给点</button>
+                </div>`,
+                methods:{
+                    getMoney(){
+                        //触发自己的自定义事件，父亲的方法执行
+                        this.$emit('child-msg',800)
+                    }
+
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

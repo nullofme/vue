@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <component1></component1><!--3.引用-->
+    <component2/>
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    let obj={school:'abc'};//如果组件公用了数据，会导致同时更新（不能保证组件阻力性）
+    let component1={
+        template:`<div @click="fn">{{school}}局部组件1</div>`,//1.创建组件
+        data(){
+            return obj
+        },
+        methods:{
+            fn(){
+                this.school='hello'
+            }
+        }
+    };
+    let component2={
+        template:'<h2>{{school}}局部组件2</h2>',
+        data(){
+            return obj
+        }
+    };
+    let vm=new Vue({
+        el:'#app',
+        components:{//2.注册组件
+            component1,component2
+        },
+        data:{
+            a:1
+        }
+    });
+</script>
+</body>
+</html>
