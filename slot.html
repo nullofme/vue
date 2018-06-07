@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <model>
+        <a href="#">111</a>
+        <div slot="mid">123</div>
+        <h1 slot="top">h1h1h1</h1>
+        <h4>h4h4</h4>
+    </model>
+</div>
+<!--模板中只有一个根元素，可以通过元素属性定制模板-->
+<!--slot可以放置默认的内容-->
+<template id="model">
+    <div>
+        <slot name="top"></slot>
+        <slot name="mid"></slot>
+        <slot name="default">这是一个默认标题</slot>
+    </div>
+</template>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let model={
+        template:'#model'
+    }
+    let vm=new Vue({
+        el:'#app',
+        data:{},
+        components:{model}
+    });
+</script>
+</body>
+</html>
