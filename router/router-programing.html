@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <router-link :to="{path:'/home'}">首页</router-link>
+    <router-link :to="{path:'/list'}">列表页</router-link>
+    <router-view></router-view>
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script src="../../node_modules/vue-router/dist/vue-router.js"></script>
+<script>
+    let home = {
+        template: '<div>首页<button @click=" toList">去列表</button></div>',
+        methods:{
+            toList(){
+                this.$router.push('/list')//强制跳转路径
+               // this.$router.replace('/list')路由替换，将当前的历史替换掉
+            }
+        }
+    };
+    let list = {
+        template: '<div>列表页<button @click="back">返回</button></div>',
+        methods:{
+            back(){
+                this.$router.go(-1)//返回某一级，go顶替了back
+            }
+        }
+    };
+    let routes = [
+        {path: '', component:home},//默认的展示的路由
+        {path: '/home', component:home},
+        {path: '/list', component:list},
+       // {path: '*', component:home},//都匹配不到，也显示首页-必须在最下面,路径不会变，只是切换了组件
+        {path:'*',redirect:'/home'}//路径变，组件也要其切换，404的时候
+    ];
+    let router = new VueRouter({
+        routes,
+    })
+    let vm = new Vue({
+        el: '#app',
+        router,
+        data: {}
+    });
+</script>
+</body>
+</html>

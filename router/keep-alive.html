@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="radio" v-model="radio" value="home">home
+    <input type="radio" v-model="radio" value="list">list
+    <!--一般用作缓存，为的是后面的的路由做准备，如果缓存了，就不会再走created  mounter钩子函数-->
+    <keep-alive>
+        <component :is="radio"></component>
+    </keep-alive>
+
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    let home={template:'<div>home</div>'};
+    let list={template:'<div>list</div>'};
+    let vm=new Vue({
+        el:'#app',
+        data:{radio:'home'},
+        components:{
+            home,list
+        }
+    });
+</script>
+</body>
+</html>

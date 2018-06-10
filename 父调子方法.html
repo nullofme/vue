@@ -27,7 +27,10 @@
         components: {loading},
         mounted(){//ref放在组件上获取的是组件的实例，不是组件的dom元素
            // this.$refs.load.hide()
-            this.$refs.load.$el.style.background='red'
+           setTimeout(()=>{
+               this.$refs.load.$el.style.display='none'
+           },1000)
+            //模拟数据加载完隐藏加载中
         }
     });
 </script>
