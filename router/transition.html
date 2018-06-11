@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../node_modules/animate.css/animate.css">
+</head>
+<body>
+<div id="app">
+    <router-link to="/home">home</router-link>
+    <router-link to="/list">list</router-link>
+    <!--  mode="out-in" 动画模式-->
+
+    <transition
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+    >
+        <keep-alive><!--要缓存谁，就把谁包起来-->
+            <router-view
+                    style="position: absolute;
+            top:30px;left:0;width: 100%">
+            </router-view>
+        </keep-alive>
+        <!--放在同一平面上，防止闪动-->
+    </transition>
+
+
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script src="../../node_modules/vue-router/dist/vue-router.js"></script>
+<script>
+    let home = {template: '<div style="background: red">home</div>'};
+    let list = {template: '<div style="background: green">list</div>'};
+    let routes = [
+        {path: '/home', component: home},
+        {path: '/list', component: list}
+    ]
+    let router = new VueRouter({
+        routes
+    })
+    let vm = new Vue({
+        el: '#app',
+        data: {}, router
+    });
+</script>
+</body>
+</html>
